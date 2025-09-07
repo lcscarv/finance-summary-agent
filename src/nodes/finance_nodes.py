@@ -17,6 +17,8 @@ def fetch_ticker_node(state: AgentState) -> AgentState:
     Returns:
         dict | str: A dictionary containing key stock fundamentals or an error message.
     """
+    if "price" not in state.get("requested_info", []):
+        return state
     ticker = state["ticker"]
     stock_price_info = get_current_stock_price(ticker)
     ticker_info = state.get("ticker_info", {})
@@ -34,6 +36,8 @@ def fetch_recommendations_node(state: AgentState) -> AgentState:
     Returns:
         dict | str: A JSON string containing analyst recommendations or an error message.
     """
+    if "recommendations" not in state.get("requested_info", []):
+        return state
     ticker = state["ticker"]
     stock_recommendations = get_analyst_recommendations(ticker)
     ticker_info = state.get("ticker_info", {})
@@ -51,6 +55,8 @@ def fetch_fundamentals_node(state: AgentState) -> AgentState:
     Returns:
         dict | str: A JSON string containing key stock fundamentals or an error message.
     """
+    if "fundamentals" not in state.get("requested_info", []):
+        return state
     ticker = state["ticker"]
     stock_fundamentals = get_stock_fundamentals(ticker)
     ticker_info = state.get("ticker_info", {})
@@ -68,6 +74,8 @@ def fetch_news_node(state: AgentState) -> AgentState:
     Returns:
         dict | str: A JSON string containing recent news articles or an error message.
     """
+    if "news" not in state.get("requested_info", []):
+        return state
     ticker = state["ticker"]
     stock_news = get_company_news(ticker)
     ticker_info = state.get("ticker_info", {})
