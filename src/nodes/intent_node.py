@@ -1,10 +1,6 @@
-import os
-from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
 from src.agent.state import AgentState
-
-OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 
 
 class IntentOutput(BaseModel):
@@ -32,7 +28,7 @@ def intent_node(state: AgentState) -> AgentState:
         str: The determined intent as a string.
     """
     user_input = state["user_message"]
-    llm = ChatOpenAI(temperature=0, model="gpt-4o-mini", api_key=OPENAI_API_KEY)
+    llm = state["llm"]
     llm_structured = llm.with_structured_output(IntentOutput)
 
     prompt = f"""Given the following user message, 
