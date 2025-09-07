@@ -2,6 +2,8 @@ from langchain_core.messages import HumanMessage
 from langchain_openai.chat_models import ChatOpenAI
 from pydantic import BaseModel, Field
 
+from src.agent.state import AgentState
+
 
 class IntentOutput(BaseModel):
     ticker: str = Field(
@@ -16,7 +18,9 @@ class IntentOutput(BaseModel):
     )
 
 
-def intent_node(user_input: HumanMessage, llm: ChatOpenAI) -> IntentOutput:
+def intent_node(
+    user_input: HumanMessage, llm: ChatOpenAI, state: AgentState
+) -> AgentState:
     """
     Determine the user's intent from their input message.
 
@@ -31,9 +35,13 @@ def intent_node(user_input: HumanMessage, llm: ChatOpenAI) -> IntentOutput:
 
     prompt = f"""Given the following user message, 
     extract the ticker symbol and what information they want 
-    (price, news, fundamentals, recommendations, or all): f{user_input.content}"""
+    (price, news, fundamentals, recommendations). If no clear direction of what
+    info the user wants, you must use every information: f{user_input.content}"""
 
     response: IntentOutput = llm_structured.invoke(
         [{"role": "user", "content": prompt}]
     )  # type: ignore
-    return response
+
+    state["ticker"] = response.ticker
+    state["requested_info"] = response.info_requested
+    return state
