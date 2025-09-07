@@ -23,4 +23,5 @@ def summarizer_node(state: AgentState) -> AgentState:
     prompt = f"Summarize the following financial information about {state['ticker']}:\n{state['ticker_info']}"
 
     response = llm.invoke([{"role": "user", "content": prompt}])
-    return AgentState(**{**state, "summary": response.content})
+    state["summary"] = response.content
+    return state
