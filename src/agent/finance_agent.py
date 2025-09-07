@@ -2,7 +2,12 @@ import os
 from langchain_openai import ChatOpenAI
 
 from src.agent.state import AgentState
-from src.nodes.finance_nodes import fetch_ticker_node
+from src.nodes.finance_nodes import (
+    fetch_ticker_node,
+    fetch_recommendations_node,
+    fetch_fundamentals_node,
+    fetch_news_node,
+)
 from src.nodes.summarizer_node import summarizer_node
 
 OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
@@ -18,11 +23,13 @@ class FinanceAgent:
     def run(self) -> AgentState:
         state: AgentState = {
             "ticker": self.ticker,
-            "ticker_info": None,
+            "ticker_info": {},
             "summary": None,
         }
         state = fetch_ticker_node(state, self.ticker)
-
+        state = fetch_recommendations_node(state, self.ticker)
+        state = fetch_fundamentals_node(state, self.ticker)
+        state = fetch_news_node(state, self.ticker)
         state = summarizer_node(state, self.llm)
         return state
 
