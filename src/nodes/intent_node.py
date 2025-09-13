@@ -34,7 +34,9 @@ def intent_node(state: AgentState) -> AgentState:
     prompt = f"""Given the following user message, 
     extract the ticker symbol and what information they want 
     (price, news, fundamentals, recommendations). If no clear direction of what
-    info the user wants, you must use every information: f{user_input.content}"""
+    info the user wants, you must use every information.
+    If the user input is not related to stocks, you should return None as the ticker and general_chat for info_requested.
+    User Input: f{user_input.content}"""
 
     response: IntentOutput = llm_structured.invoke(
         [{"role": "user", "content": prompt}]
