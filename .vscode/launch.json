@@ -13,6 +13,24 @@
             "console": "integratedTerminal",
             "workspaceFolder": "${workspaceFolder}",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "name": "Python: Debug Fastapi",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "main:app",
+                "--host",
+                "0.0.0.0",
+                "--port",
+                "8000",
+                "--reload"
+            ],
+            "console": "internalConsole",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}/",
+            "envFile": "${workspaceFolder}/.env",
         }
     ]
 }
