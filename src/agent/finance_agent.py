@@ -23,9 +23,8 @@ class FinanceAgent:
             "requested_info": [],
             "ticker_info": {},
             "summary": None,
+            "general_response": None,
         }
-        for event in graph.stream(state):
-            print(f"Node: {event}")
 
         final_state = graph.invoke(state)
         return final_state
