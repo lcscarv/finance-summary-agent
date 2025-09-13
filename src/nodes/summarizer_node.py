@@ -13,11 +13,11 @@ def summarizer_node(state: AgentState) -> AgentState:
         AgentState: The updated state with the summary included.
     """
     if not state.get("ticker_info"):
-        state["summary"] = "No ticker information available to summarize."
+        state["response"] = "No ticker information available to summarize."
         return state
     llm = state["llm"]
     prompt = f"Summarize the following financial information about {state['ticker']}:\n{state['ticker_info']}"
 
     response = llm.invoke([{"role": "user", "content": prompt}])
-    state["summary"] = response.content
+    state["response"] = response.content
     return state
