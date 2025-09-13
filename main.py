@@ -1,15 +1,7 @@
-from langchain_core.messages import HumanMessage
-from src.agent.finance_agent import FinanceAgent
+from fastapi import FastAPI
+from src.api.routes import router
 
 
-def main():
-    user_message = HumanMessage(content="What is the capital of Brazil?")
-    agent = FinanceAgent(user_message)
-    result = agent.run()
-    if result["general_response"]:
-        print(result["general_response"])
-    print(result["summary"])
-
-
-if __name__ == "__main__":
-    main()
+app = FastAPI()
+app.title = "Finance Agent API"
+app.include_router(router)

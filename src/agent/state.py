@@ -9,5 +9,4 @@ class AgentState(TypedDict):
     ticker: Optional[str]
     requested_info: Optional[list[str]]
     ticker_info: Optional[dict]
-    summary: Optional[str]
-    general_response: Optional[str]
+    response: Optional[str]

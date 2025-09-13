@@ -22,8 +22,7 @@ class FinanceAgent:
             "ticker": "",
             "requested_info": [],
             "ticker_info": {},
-            "summary": None,
-            "general_response": None,
+            "response": None,
         }
 
         final_state = graph.invoke(state)
