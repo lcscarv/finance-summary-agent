@@ -16,8 +16,7 @@ def test_intent_node():
         ticker=None,
         requested_info=None,
         ticker_info={},
-        summary=None,
-        general_response=None,
+        response=None,
     )
     final_state = intent_node(state)
     info_requested = final_state.get("requested_info", [])
